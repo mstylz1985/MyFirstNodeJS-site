@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        Main Page
+    </title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/1.58.4/plotly.min.js" integrity="sha512-odxyOOOwpEgYQnS+TzF/P33O+DfGNGqyh89pJ/u2addhMw9ZIef3M8aw/otYSgsPxLdZi3HQhlI9IiX3H5SxpA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js" integrity="sha512-XKa9Hemdy1Ui3KSGgJdgMyYlUg1gM+QhL6cnlyTe2qzMCYm4nAZ1PsVerQzTTXzonUR+dmswHqgJPuwCq1MaAg==" crossorigin="anonymous"></script>
+</head>
+    
+<body>
+    <h1>Main Heading</h1>
+    <div id="tt"></div>
+    <h2>Raw Data</h2>
+
+</body>
+<script>
+    $('#tt').html('This is strong')
+    async function getUrl(ajaxurl, onSuccess, onFail) {
+	let result;
+	try {
+		result = await $.ajax({
+			url: ajaxurl,
+			type: "GET"
+		});
+		onSuccess(result); //jquerySelector.html(JSON.stringify(result,null,2))
+		return result;
+	} catch (error) {
+		if (onFail) onFail(error);
+		console.error(error);
+	}
+}
+
+function
+
+let url ="https://api.covidtracking.com/v1/us/daily.json";
+    getUrl(url,
+    (covidData)=> $("#rawdata").html(JSON.stringify(covidData,null, 2)),
+    (err)=>console.error(err)
+    )
+    function makePlotly(xArray, yArray) {
+    let divID = "plot";
+	var traces = [
+		{
+			x: xArray,
+			y: yArray,
+            type:'bar'
+		}
+	];
+    let layout = {
+		title: "Plotting Covid data from AJAX call"
+	}
+    let config = {
+  toImageButtonOptions: {
+    format: 'svg', // one of png, svg, jpeg, webp
+    filename: 'custom_image',
+    height: 500,
+    width: 700,
+    scale: 1 // Multiply title/legend/axis/canvas sizes by this factor
+  }
+};
+    console.log('writing to screen')
+	Plotly.newPlot(divID, traces, layout, config);
+}
+</script>
+
+</html>
